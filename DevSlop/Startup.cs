@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevSlop.Slop;
 using DevSlop.Slop.Data;
 using DevSlop.Slop.Repositories;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,13 +19,34 @@ namespace DevSlop
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
 
+
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+            var config = builder.Build();
+
+            builder.AddAzureKeyVault(
+                $"https://{config["azureKeyVault:vault"]}.vault.azure.net/",
+                config["azureKeyVault:clientId"],
+                config["azureKeyVault:clientSecret"]
+            );
+
+            this.Configuration = builder.Build();
+
+            //example of how to read value
+            var connectionString = Configuration["appSettings:connectionStrings:DefaultConnection"];
+            var aiClient = new TelemetryClient();
+            aiClient.TrackTrace("connection string from Startup(): " + connectionString, Microsoft.ApplicationInsights.DataContracts.SeverityLevel.Information);
+        }
+
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -42,7 +64,12 @@ namespace DevSlop
 
             // Register the IConfiguration instance which MyOptions binds against.
             services.Configure<ConnectionStrings>(this.Configuration);
-            var connectionString = this.Configuration.GetValue<string>("DefaultConnection");
+            //var connectionString = this.Configuration.GetValue<string>("DefaultConnection");
+            var connectionString = this.Configuration["appSettings:connectionStrings:DefaultConnection"];
+
+            var aiClient = new TelemetryClient();
+            aiClient.TrackTrace("connection string from ConfigureServices(): " + connectionString, Microsoft.ApplicationInsights.DataContracts.SeverityLevel.Information);
+
 
             // Registering DBContext, need this to get Identity to work
             services.AddDbContext<DevSlopContext>(options => options.UseSqlServer(connectionString));
