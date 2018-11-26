@@ -1,0 +1,132 @@
+﻿@model DevSlop.Slop.Data.Entities.Schedule
+
+
+@{
+    ViewData["Title"] = "AddNewEvent";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="admin-container">
+
+    <h2>
+        @if (Model.Id == 0)
+        {
+            <span>Add New </span>
+        }
+        else
+        {
+            <span>Edit </span>
+        }
+        <span>Event</span>
+    </h2>
+
+    <a asp-action="Index">Admin</a> &gt;
+    @if (Model.Id == 0)
+    {
+        <span>Add New </span>
+    }
+    else
+    {
+        <span>Edit </span>
+    }
+    <span>Event</span>
+    <br />
+    <br />
+    <form asp-controller="Admin" asp-action="SaveEvent" method="post">
+        <input asp-for="Id" type="hidden" />
+
+        <table class="adminForm">
+            <tbody>
+                <tr>
+                    <td>
+                        <label asp-for="What" class="formLabel"></label>
+                    </td>
+                    <td>
+                        <input asp-for="What" class="formTextBox" />
+                        <span asp-validation-for="What"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="WhatUrl" class="formTextBox"></label>
+                    </td>
+                    <td>
+                        <input asp-for="WhatUrl" class="formTextBox" />
+                        <span asp-validation-for="WhatUrl"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="When" class="formTextBox"></label>
+
+                    </td>
+                    <td>
+                        <input asp-for="When" class="formTextBox" />
+                        <span asp-validation-for="When"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="WhenUrl" class="formTextBox"></label>
+                    </td>
+                    <td>
+                        <input asp-for="WhenUrl" class="formTextBox" />
+                        <span asp-validation-for="WhenUrl"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Where" class="formTextBox"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Where" class="formTextBox" />
+                        <span asp-validation-for="Where"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="WhereUrl" class="formTextBox"></label>
+                    </td>
+                    <td>
+                        <input asp-for="WhereUrl" class="formTextBox" />
+                        <span asp-validation-for="WhereUrl"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Who" class="formTextBox"></label>
+                    <td>
+                        <input asp-for="Who" class="formTextBox" />
+                        <span asp-validation-for="Who"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="WhoUrl" class="formTextBox"></label>
+                    </td>
+                    <td>
+                        <input asp-for="WhoUrl" class="formTextBox" />
+                        <span asp-validation-for="WhoUrl"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Description" class="formTextBox"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Description" class="formTextBox" />
+                        <span asp-validation-for="Description"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input name="button" type="submit" value="Save" /> <input name="button" type="submit" value="Cancel" class="cancel" />
+    </form>
+
+
+</div>
+

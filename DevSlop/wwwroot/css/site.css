@@ -80,3 +80,45 @@ body {
 .col-md-4 {
     color: black;
 }
+
+.admin-container {
+    height: 100%;
+    width: 100%;
+    /*background-color: #1d539d;*/
+    color: black;
+    padding-top: 30px;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 80px;
+    margin-bottom: 30px;
+}
+
+.adminForm, td {
+    height: 40px;
+}
+
+.formTextBox {
+    width: 200px
+}
+
+.formLabel {
+    width:150px;
+}
+
+table {
+    width: 800px;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+table.grid td, th {
+    border: 1px solid #dddddd;
+}
+
+table.grid tr:nth-child(even) {
+    background-color: #dddddd
+}

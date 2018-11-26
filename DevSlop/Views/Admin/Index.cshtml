@@ -1,0 +1,53 @@
+﻿@using DevSlop.Slop.TagHelpers
+
+@model DevSlop.Models.Admin.AdminIndexViewModel
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="admin-container">
+    <h2>Admin Page</h2>
+
+    <h3>Events</h3>
+    <a asp-action="AddNewEvent">+ Add New Event</a>
+
+    <table class="grid">
+        <tr>
+            <th class="actionColumn">
+                Action
+            </th>
+            <th>
+                What
+            </th>
+            <th>
+                When
+            </th>
+        </tr>
+        @foreach (var scheduleEvent in Model.Schedules)
+        {
+            <tr>
+                <td>
+                    <a asp-action="DeleteEvent" asp-controller="Admin" asp-route-eventId="@scheduleEvent.Id" onclick="return confirm('Are you sure you wish to delete this event?');">Delete</a>
+                </td>
+                <td>
+                    <a asp-action="ViewEvent" , asp-controller="Admin" asp-route-id="@scheduleEvent.Id">@scheduleEvent.What</a>
+                </td>
+                <td>
+                    @scheduleEvent.When
+                </td>
+            </tr>
+        }
+    </table>
+    page: <paging total-items="@Model.TotalItems"
+                  items-per-page="@Model.ItemsPerPage"
+                  current-page="@Model.CurrentPage"
+                  route="/admin/index"
+                  sort-string="@Model.SortString"
+                  sort-ascending="@Model.IsSortAscending">
+    </paging>
+    <h3>Advocates</h3>
+    <a asp-area="Identity" asp-page="/Account/Register">+ Add New Advocate</a>
+</div>
+
+    

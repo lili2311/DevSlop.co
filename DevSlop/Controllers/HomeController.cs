@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DevSlop.Models;
 using DevSlop.Slop.Repositories;
+using DevSlop.Models.Home;
 
 namespace DevSlop.Controllers
 {
@@ -65,8 +66,15 @@ namespace DevSlop.Controllers
         {
             ViewData["Message"] = "Scheduled Appearances";
 
-            var scheduleList = _scheduleRepo.GetAllSchedules();
-            return View(scheduleList);
+            var currentSchedule = _scheduleRepo.GetCurrentSchedule();
+            var pastSchedule = _scheduleRepo.GetPastSchedule();
+
+            var vm = new ScheduleViewModel
+            {
+                CurrentScheduleList = currentSchedule,
+                PastScheduleList = pastSchedule
+            };
+            return View("Schedule", vm);
         }
 
         public IActionResult Pixi()
