@@ -108,7 +108,7 @@ namespace DevSlop
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            devSlopContext.Database.Migrate();
+            //devSlopContext.Database.Migrate();
         }
     }
 }
